@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6ee">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="가천대 비전타워와 교육대학원 식당의 오늘과 이번 주 점심 메뉴를 한 곳에서 보세요.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%3Crect%20width%3D%22192%22%20height%3D%22192%22%20rx%3D%2238%22%20fill%3D%22%23183b34%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23e9f59d%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M43%20101h106a47%2047%200%200%201-46%2038H89a47%2047%200%200%201-46-38ZM78%20151h36M74%2085c-12-13%2012-17%200-30M96%2085c-12-13%2012-17%200-30M118%2085c-12-13%2012-17%200-30%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" type="image/svg+xml">
+  <title>오늘의 가천 학식</title>
+  <style>
+    :root{color-scheme:light;--page:#f4f6ee;--paper:#fffefa;--ink:#192c23;--muted:#52645a;--line:#dce4d8;--dark:#183b34;--lime:#e9f59d;--green:#e3efdf;--orange:#f6e9d8;font-family:Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+    *{box-sizing:border-box} body{margin:0;background:var(--page);color:var(--ink);font-size:1rem;line-height:1.5;word-break:keep-all}
+    button,a{font:inherit} button{cursor:pointer;color:inherit} button:disabled{cursor:wait} a{color:inherit} :focus-visible{outline:3px solid #54702b;outline-offset:4px}
+    .shell{max-width:1064px;margin:auto;padding:0 clamp(16px,4vw,48px)}
+    .top{display:flex;justify-content:space-between;align-items:center;min-height:81px;gap:16px}
+    .wordmark{display:flex;gap:10px;align-items:center;font-size:1.07rem;font-weight:800;letter-spacing:-.035em}
+    .wordmark img{width:36px;height:36px;border-radius:10px}
+    .top button,.meal-switch button{border:1px solid var(--line);border-radius:999px;background:var(--paper);padding:8px 14px;min-height:42px;font-weight:700;font-size:.875rem;white-space:nowrap}
+    .top button:hover,.meal-switch button:hover,.date-button:hover{border-color:#789082}
+    .hero{display:flex;align-items:center;justify-content:space-between;gap:20px;background:var(--dark);color:white;border-radius:26px;padding:clamp(26px,5vw,45px);min-height:205px;overflow:hidden}
+    .hero p{margin:0;font-weight:700;color:#dbe8da;letter-spacing:-.02em}
+    .hero h1{margin:8px 0 11px;color:var(--lime);font-size:clamp(2.55rem,6.4vw,4.45rem);font-weight:850;letter-spacing:-.075em;line-height:1.07}
+    .hero time{color:#edf4e7;font-size:1rem}
+    .hero img{width:clamp(108px,18vw,185px);height:auto;flex:none;pointer-events:none}
+    .day-picker{margin-top:22px}
+    .dates{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+    .date-button{display:grid;justify-items:center;align-content:center;gap:1px;min-height:65px;min-width:0;padding:6px 0;background:var(--paper);border:1px solid var(--line);border-radius:14px;font-variant-numeric:tabular-nums}
+    .date-button span{font-size:.875rem;color:var(--muted);font-weight:600}.date-button strong{font-size:1.08rem}
+    .date-button[aria-pressed=true]{border-color:var(--dark);background:var(--dark);color:#fff}.date-button[aria-pressed=true] span{color:#deeddb}
+    .date-button[aria-current=date] strong::after{content:"";display:inline-block;width:5px;height:5px;background:#537137;border-radius:100%;margin-left:3px;vertical-align:top;margin-top:4px}
+    .date-button[aria-current=date][aria-pressed=true] strong::after{background:var(--lime)}
+    .section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:28px 0 13px}
+    h2,h3,h4,p{margin:0}.section-head h2{font-size:clamp(1.4rem,3.6vw,1.85rem);font-weight:850;letter-spacing:-.06em}
+    .meal-switch{display:flex;gap:6px}.meal-switch button[aria-pressed=true]{border-color:var(--dark);background:var(--dark);color:#fff}
+    .restaurants{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+    .card{min-width:0;border:1px solid var(--line);border-radius:20px;background:var(--paper);overflow:hidden}
+    .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 21px;background:var(--green)}
+    .card:nth-child(2) .card-head{background:var(--orange)}
+    .card-head h3{font-size:1.28rem;letter-spacing:-.055em;font-weight:850}.card-head p{font-size:.875rem;color:#364e43;margin-top:3px}
+    .card-head a{font-size:.875rem;font-weight:700;flex:none;padding:4px 0;text-underline-offset:3px}
+    .meals{padding:0 21px}.option{padding:16px 0 17px}.option+.option{border-top:1px solid var(--line)}
+    .option-top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.875rem;font-weight:750;color:#3e5849}
+    .price{font-variant-numeric:tabular-nums;white-space:nowrap}.option h4{font-size:1.2rem;letter-spacing:-.045em;margin-top:5px;overflow-wrap:anywhere}
+    .option .notice{font-size:1rem;font-weight:650;color:var(--muted)}.sides{font-size:.925rem;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}
+    .empty{padding:19px 0 23px;color:var(--muted);font-size:.95rem}.foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:18px 0 32px;color:var(--muted);font-size:.875rem}
+    @media(max-width:680px){.top{min-height:66px}.hero{min-height:160px;border-radius:20px}.hero img{margin-right:-12px}.dates{gap:5px}.date-button{min-height:59px;border-radius:12px}.restaurants{grid-template-columns:1fr}.section-head{margin-top:22px}.card-head,.meals{padding-inline:16px}}
+    @media(max-width:375px){.hero img{width:78px}.hero{gap:10px}.meal-switch button{padding-inline:11px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="wordmark"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%3Crect%20width%3D%22192%22%20height%3D%22192%22%20rx%3D%2238%22%20fill%3D%22%23183b34%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23e9f59d%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M43%20101h106a47%2047%200%200%201-46%2038H89a47%2047%200%200%201-46-38ZM78%20151h36M74%2085c-12-13%2012-17%200-30M96%2085c-12-13%2012-17%200-30M118%2085c-12-13%2012-17%200-30%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="" width="36" height="36">가천 학식</div>
+      <button type="button" id="refresh">새로고침</button>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="title">
+        <div><p>가천대학교 글로벌캠퍼스</p><h1 id="title">오늘의 학식</h1><time id="today"></time></div>
+        <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%3Crect%20width%3D%22192%22%20height%3D%22192%22%20rx%3D%2238%22%20fill%3D%22%23183b34%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23e9f59d%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M43%20101h106a47%2047%200%200%201-46%2038H89a47%2047%200%200%201-46-38ZM78%20151h36M74%2085c-12-13%2012-17%200-30M96%2085c-12-13%2012-17%200-30M118%2085c-12-13%2012-17%200-30%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E" width="185" height="185" alt="">
+      </section>
+      <nav class="day-picker" aria-label="이번 주 날짜"><div class="dates" id="dates"></div></nav>
+      <div class="section-head">
+        <h2 id="selection">오늘 점심</h2>
+        <div class="meal-switch" role="group" aria-label="끼니 선택">
+          <button type="button" data-meal="breakfast" aria-pressed="false">아침</button>
+          <button type="button" data-meal="lunch" aria-pressed="true">점심</button>
+          <button type="button" data-meal="dinner" aria-pressed="false">저녁</button>
+        </div>
+      </div>
+      <div class="restaurants" id="restaurants" aria-labelledby="selection" aria-busy="true"></div>
+      <footer class="foot"><span>식단 출처 · 가천대학교 학생식당</span><span id="status" role="status"></span></footer>
+    </main>
+  </div>
+  <script>
+    const restaurants = [
+      { id: 'vision', name: '비전타워 식당', location: '비전타워 B구역', source: 'https://www.gachon.ac.kr/kor/7347/subview.do', hours: { breakfast: '07:30–09:30', lunch: '11:00–13:30' } },
+      { id: 'education', name: '교육대학원 식당', location: '교육대학원 지하 1층', source: 'https://www.gachon.ac.kr/kor/7349/subview.do', hours: { lunch: '11:00–13:30', dinner: '17:30–19:00' } },
+    ];
+    const mealNames = { breakfast: '아침', lunch: '점심', dinner: '저녁' };
+    const optionNames = { a: 'A · 정식', b: 'B · 단품', salad: '샐러드', lunch: '점심 정식', breakfast: '천원의 아침밥', dinner: '저녁 정식' };
+    const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+    const localDate = new Intl.DateTimeFormat('ko', { dateStyle: 'full', timeZone: 'UTC' });
+    const clock = new Intl.DateTimeFormat('ko', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Seoul' });
+    const costFormat = new Intl.NumberFormat('ko-KR');
+    const dateKey = new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Seoul' });
+    const refreshButton = document.getElementById('refresh');
+    const statusLine = document.getElementById('status');
+    const restaurantList = document.getElementById('restaurants');
+    let today = dateKey.format();
+    let selected = today;
+    let meal = 'lunch';
+    let data;
+    let loading = true;
+    let lastRequest = 0;
+
+    function utcDate(day) { return new Date(day + 'T00:00:00Z'); }
+
+    function el(tag, className, value) {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      if (value !== undefined) element.textContent = value;
+      return element;
+    }
+
+    function renderDates() {
+      const start = utcDate(today);
+      start.setUTCDate(start.getUTCDate() - (start.getUTCDay() + 6) % 7);
+      const dates = document.getElementById('dates');
+      const focused = document.activeElement?.dataset.date;
+      dates.replaceChildren();
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(start);
+        date.setUTCDate(start.getUTCDate() + i);
+        const key = date.toISOString().slice(0, 10);
+        const button = el('button', 'date-button');
+        button.type = 'button';
+        button.dataset.date = key;
+        button.setAttribute('aria-label', localDate.format(date) + (key === today ? ' 오늘' : ''));
+        button.setAttribute('aria-pressed', String(key === selected));
+        if (key === today) button.setAttribute('aria-current', 'date');
+        button.append(el('span', '', weekdays[date.getUTCDay()]), el('strong', '', date.getUTCDate()));
+        button.addEventListener('click', () => { selected = key; renderDates(); renderMeals(); });
+        dates.append(button);
+        if (focused === key) button.focus();
+      }
+    }
+
+    function renderMeals() {
+      const date = utcDate(selected);
+      const title = selected === today ? '오늘' : `${date.getUTCMonth() + 1}/${date.getUTCDate()} (${weekdays[date.getUTCDay()]})`;
+      document.getElementById('selection').textContent = `${title} ${mealNames[meal]}`;
+      restaurantList.setAttribute('aria-busy', String(loading));
+      restaurantList.replaceChildren();
+      for (const restaurant of restaurants) {
+        const card = el('article', 'card');
+        const head = el('header', 'card-head');
+        const info = el('div');
+        const hours = restaurant.hours[meal];
+        info.append(el('h3', '', restaurant.name), el('p', '', [restaurant.location, hours].filter(Boolean).join(' · ')));
+        const link = el('a', '', '공식 식단');
+        link.href = restaurant.source;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.setAttribute('aria-label', `${restaurant.name} 공식 식단`);
+        head.append(info, link);
+        const meals = el('div', 'meals');
+        const result = data?.restaurants[restaurant.id];
+        const kinds = meal === 'lunch' ? ['lunch', 'a', 'b', 'salad'] : [meal];
+        const options = result?.days[selected]?.filter((option) => kinds.includes(option.kind)) ?? [];
+        if (!hours) meals.append(el('p', 'empty', `${mealNames[meal]} 메뉴가 없는 식당이에요.`));
+        else if (!result || !['ok', 'stale'].includes(result.status)) {
+          const message = loading ? '식단을 불러오는 중이에요.' : result?.status === 'unpublished' ? '이번 주 식단이 아직 게시되지 않았어요.' : '학교 식단을 불러오지 못했어요.';
+          meals.append(el('p', 'empty', message));
+        } else if (!options.length) meals.append(el('p', 'empty', '이날 게시된 메뉴가 없어요.'));
+        for (const { kind, label, price, items, notice } of options) {
+          const option = el('section', 'option');
+          const top = el('div', 'option-top');
+          top.append(el('span', '', optionNames[kind] ?? label));
+          if (price != null) top.append(el('span', 'price', `${costFormat.format(price)}원`));
+          option.append(top, el('h4', notice ? 'notice' : '', (items[0] ?? '게시된 메뉴 없음').replace(/^\*\s*|\s*\*$/g, '')));
+          if (items.length > 1) option.append(el('p', 'sides', items.slice(1).join(' · ')));
+          meals.append(option);
+        }
+        card.append(head, meals);
+        restaurantList.append(card);
+      }
+    }
+
+    function render() {
+      const time = document.getElementById('today');
+      time.dateTime = today;
+      time.textContent = localDate.format(utcDate(today));
+      renderDates();
+      renderMeals();
+    }
+
+    async function loadMenus(refresh = false) {
+      lastRequest = Date.now();
+      refreshButton.disabled = true;
+      loading = true;
+      statusLine.textContent = '식단 확인 중';
+      try {
+        const request = await fetch('./menus.json' + (refresh ? '?refresh=' + Date.now() : ''), { cache: 'no-store' });
+        if (!request.ok) throw new Error('식단 조회 실패');
+        const latest = await request.json();
+        const current = dateKey.format();
+        if (today !== current) selected = current;
+        today = current;
+        const monday = utcDate(today);
+        monday.setUTCDate(monday.getUTCDate() - (monday.getUTCDay() + 6) % 7);
+        const week = monday.toISOString().slice(0, 10);
+        data = latest.week === week ? latest : {
+          checkedAt: latest.checkedAt,
+          restaurants: Object.fromEntries(restaurants.map(({ id }) => [id, { status: 'unpublished', days: {} }])),
+        };
+        const statuses = Object.values(data.restaurants).map((result) => result.status);
+        if (statuses.includes('stale')) statusLine.textContent = '학교 조회 지연 · 이번 주에 확인한 식단 표시 중';
+        else if (statuses.every((status) => status === 'unavailable')) statusLine.textContent = '학교 식단 조회 실패';
+        else if (statuses.includes('unavailable')) statusLine.textContent = '일부 식단 조회 실패';
+        else if (statuses.every((status) => status === 'unpublished')) statusLine.textContent = '이번 주 식단을 기다리는 중';
+        else statusLine.textContent = `${new Intl.DateTimeFormat('ko', { month: 'numeric', day: 'numeric', timeZone: 'Asia/Seoul' }).format(new Date(data.checkedAt))} ${clock.format(new Date(data.checkedAt))} 조회`;
+      } catch {
+        statusLine.textContent = data ? '이전 조회 결과 표시 중' : '식단 조회 실패';
+      } finally {
+        loading = false;
+        refreshButton.disabled = false;
+        render();
+      }
+    }
+
+    for (const button of document.querySelectorAll('[data-meal]')) {
+      button.addEventListener('click', () => {
+        meal = button.dataset.meal;
+        for (const option of document.querySelectorAll('[data-meal]')) option.setAttribute('aria-pressed', String(option === button));
+        renderMeals();
+      });
+    }
+    refreshButton.addEventListener('click', () => loadMenus(true));
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && !loading && (today !== dateKey.format() || Date.now() - lastRequest > 300000)) loadMenus();
+    });
+    render();
+    loadMenus();
+  </script>
+</body>
+</html>
