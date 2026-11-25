@@ -1,0 +1,51 @@
+name: 가천 학식 갱신 및 배포
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # 08:17, 11:17, and 17:17 in Korea Standard Time.
+    - cron: '17 2,8,23 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - uses: actions/configure-pages@v5
+        id: pages
+      - name: Fetch both cafeteria menus and build the site
+        run: node collect-menu.mjs
+        env:
+          PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deploy
